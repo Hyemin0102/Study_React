@@ -3,6 +3,8 @@ import './App.css';
 import axios from '../node_modules/axios/index';
 import NewsList from './components/NewsList';
 import Categories from './components/Categories';
+import NewsPage from './pages/NewsPage';
+import {Routes,Route} from 'react-router-dom';
 
 /* //증가할 숫자, 콜백 함수 인자로 받음
 function increase(number,callback){
@@ -80,14 +82,12 @@ runTasks(); */
 
 
 function App() {
-  const [category, setCategory] = useState('all');
-  console.log('category',category)
-  const onSelect = useCallback(category => setCategory(category),[]);
+
   return (
-    <div>
-      <Categories category={category} onSelect={onSelect}/>
-      <NewsList category={category}/>
-    </div>
+    <Routes>
+      <Route path="/" element={<NewsPage />}/>
+      <Route path="/:category" element={<NewsPage />}/>
+    </Routes>
   );
 }
 
