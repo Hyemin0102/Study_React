@@ -1,4 +1,8 @@
+import { useCallback, useState } from 'react';
 import './App.css';
+import axios from '../node_modules/axios/index';
+import NewsList from './components/NewsList';
+import Categories from './components/Categories';
 
 /* //증가할 숫자, 콜백 함수 인자로 받음
 function increase(number,callback){
@@ -24,7 +28,7 @@ increase(0,result => {
   });
 }); */
 
-function increase(number){
+/* function increase(number){
   const promise = new Promise((resolve, reject)=>{
     setTimeout(()=>{
       const result = number + 10;
@@ -39,7 +43,24 @@ function increase(number){
   return promise;
 }
 
-increase(0)
+async function runTasks(){
+  try{
+    let result = await increase(0);
+    console.log('result',result);
+    result = await increase(result);
+    console.log('result1',result);
+    result = await increase(result);
+    console.log('result2',result);
+    result = await increase(result);
+    console.log('result3',result);
+  } catch (e) {
+    console.log('error',e)
+  }
+}
+
+runTasks(); */
+
+/* increase(0)
   .then(number => { //promise에서 resolve 된 값은 .then으로 받아옴
     console.log(number);
     return increase(number);//return을 또하면 다음에도 계속 .then으로 받아올 수 있음
@@ -55,13 +76,17 @@ increase(0)
   .then(number => {
     console.log(number);
     return increase(number);
-  })
+  }) */
 
 
 function App() {
+  const [category, setCategory] = useState('all');
+  console.log('category',category)
+  const onSelect = useCallback(category => setCategory(category),[]);
   return (
-    <div className="App">
-      News-API 공부하기
+    <div>
+      <Categories category={category} onSelect={onSelect}/>
+      <NewsList category={category}/>
     </div>
   );
 }
